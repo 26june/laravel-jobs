@@ -1,12 +1,61 @@
 @extends('Layout')
 
 @section('content')
+@include('partials._hero')
+@include('partials._search')
     
-<h1>{{$heading}}</h1>
+<div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
 
-@foreach ($jobs as $job)
-    <a href={{"jobs/{$job["id"]}"}}><h2>{{$job["title"]}}</h2></a>
-    <p>{{$job["description"]}}</p>
-    
-@endforeach
-@endsection
+    @unless (count($jobs) == 0)
+
+    @foreach ($jobs as $job)
+        <div class="bg-gray-50 border border-gray-200 rounded p-6">
+                        <div class="flex">
+                            <img
+                                class="hidden w-48 mr-6 md:block"
+                                src="{{ asset('images/no-image.png') }}"
+                                alt=""
+                            />
+                            <div>
+                                <h3 class="text-2xl">
+                                    <a href="/jobs/{{$job->id}}">{{$job->title}}</a>
+                                </h3>
+                                <div class="text-xl font-bold mb-4">{{$job->company}}</div>
+                                <ul class="flex">
+                                    <li
+                                        class="flex items-center justify-center bg-black text-white rounded-xl py-1 px-3 mr-2 text-xs"
+                                    >
+                                        <a href="#">Laravel</a>
+                                    </li>
+                                    <li
+                                        class="flex items-center justify-center bg-black text-white rounded-xl py-1 px-3 mr-2 text-xs"
+                                    >
+                                        <a href="#">API</a>
+                                    </li>
+                                    <li
+                                        class="flex items-center justify-center bg-black text-white rounded-xl py-1 px-3 mr-2 text-xs"
+                                    >
+                                        <a href="#">Backend</a>
+                                    </li>
+                                    <li
+                                        class="flex items-center justify-center bg-black text-white rounded-xl py-1 px-3 mr-2 text-xs"
+                                    >
+                                        <a href="#">Vue</a>
+                                    </li>
+                                </ul>
+                                <div class="text-lg mt-4">
+                                    <i class="fa-solid fa-location-dot"></i>{{$job->location}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+    @endforeach
+
+    @else
+    <p>No listings found</p>  
+    @endunless
+    @endsection
+</div>
+
+
